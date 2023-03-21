@@ -13,14 +13,15 @@ function testEvent() {
   <div class="page-root">
     <div class="page-container">
       <h1>Nuxt Umami</h1>
-      <br>
-      <button @click="testEvent">
-        Run trackEvent
-      </button>
-      <button @click="testView">
-        Run trackView
-      </button>
-      <a href="https://ml-umami.netlify.app/share/8o0OFImY/Umami%20Next" target="_blank" rel="noopener noreferrer">See Preview</a>
+      <br />
+      <button @click="testEvent">Run trackEvent</button>
+      <button @click="testView">Run trackView</button>
+      <a
+        href="https://ml-umami.netlify.app/share/8o0OFImY/Umami%20Next"
+        target="_blank"
+        rel="noopener noreferrer"
+        >See Preview</a
+      >
     </div>
   </div>
 </template>
@@ -35,7 +36,7 @@ function testEvent() {
   display: grid;
   place-items: center;
   text-align: center;
-  font-family: "Source Sans Pro", system-ui, -apple-system, Ubuntu, sans-serif;
+  font-family: 'Source Sans Pro', system-ui, -apple-system, Ubuntu, sans-serif;
 }
 
 h1 {
