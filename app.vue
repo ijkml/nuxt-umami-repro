@@ -7,6 +7,9 @@ function testView() {
 function testEvent() {
   umTrackEvent('stackblitz-event', { type: 'click', position: 'left' });
 }
+function seePreview() {
+  umTrackEvent('see-preview', { from: 'stackblitz' });
+}
 </script>
 
 <template>
@@ -17,9 +20,10 @@ function testEvent() {
       <button @click="testEvent">Run trackEvent</button>
       <button @click="testView">Run trackView</button>
       <a
-        href="https://ml-umami.netlify.app/share/8o0OFImY/Umami%20Next"
+        href="https://ml-umami.netlify.app/share/cJU6OHJ5CgsutGOb/Nuxt%20Umami"
         target="_blank"
         rel="noopener noreferrer"
+        @click="seePreview"
         >See Preview</a
       >
     </div>
