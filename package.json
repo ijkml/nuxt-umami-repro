@@ -11,6 +11,6 @@
     "nuxt": "^3.6.5"
   },
   "dependencies": {
-    "nuxt-umami": "^2.5.2"
+    "nuxt-umami": "latest"
   }
 }
