@@ -8,9 +8,9 @@
     "postinstall": "nuxt prepare"
   },
   "devDependencies": {
-    "nuxt": "^3.6.5"
+    "nuxt": "^3.11.2"
   },
   "dependencies": {
-    "nuxt-umami": "latest"
+    "nuxt-umami": "^2.6.1"
   }
 }
