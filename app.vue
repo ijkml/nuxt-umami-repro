@@ -75,10 +75,6 @@ function seePreview() {
           Page {{ i }}
         </NuxtLink>
       </div>
-
-      <div>
-        <code>`page:finish`</code> triggered <code>{{ triggerCount }}</code> times.
-      </div>
     </div>
   </div>
 </template>
