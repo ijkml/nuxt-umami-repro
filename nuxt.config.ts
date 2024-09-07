@@ -1,10 +1,17 @@
 export default defineNuxtConfig({
-  extends: ['nuxt-umami'],
-  appConfig: {
-    umami: {
-      // add options here if you like
-    },
+  devtools: { enabled: true },
+  compatibilityDate: '2024-08-08',
+
+  modules: ['nuxt-umami'],
+
+  umami: {
+    enabled: false,
+    host: 'https://savory.vercel.app/',
+    id: '84cc2d28-8689-4df0-b575-2202e34a75aa',
+    proxy: 'cloak',
+    useDirective: true,
+    logErrors: true,
   },
-  ssr: false,
+
   css: ['@/assets/reset.css'],
 });

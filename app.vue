@@ -3,7 +3,6 @@ const shareUrl = 'https://savory.vercel.app/share/j2f1spIBFqHJKsXv/Nuxt%20Umami'
 
 function testView() {
   umTrackView().then(({ ok }) => {
-    // eslint-disable-next-line no-console
     console.log(ok ? 'That went well ;)' : `Oops, that didn't go as planned`);
   });
 }
@@ -28,13 +27,28 @@ function updateRefs() {
 function seePreview() {
   umTrackEvent('see-preview', { from: 'localhost' });
 }
+
+// is disabled via localStorage
+const localStorageToggle = ref(false);
+let storage: Storage | undefined;
+
+watch(localStorageToggle, (status) => {
+  storage?.setItem('umami.disabled', String(+status));
+});
+
+onMounted(() => {
+  storage = localStorage;
+  localStorageToggle.value = storage?.getItem('umami.disabled') === '1';
+});
 </script>
 
 <template>
   <div class="page-root">
-    <div class="page-container">
+    <main
+      id="main"
+      class="page-container"
+    >
       <h1>Nuxt Umami</h1>
-      <br>
 
       <NuxtLayout>
         <NuxtPage />
@@ -60,8 +74,9 @@ function seePreview() {
           v-for="btn in directiveBtns"
           :key="btn.text"
           v-umami="btn.action"
-          v-text="btn.text"
-        />
+        >
+          {{ btn.text }}
+        </button>
         <button @click="updateRefs">
           Update Refs
         </button>
@@ -71,29 +86,57 @@ function seePreview() {
         <NuxtLink to="/">
           Homepage
         </NuxtLink>
-        <NuxtLink v-for="i in 3" :key="i" :to="`/page-${i}`">
+        <NuxtLink
+          v-for="i in 3"
+          :key="i"
+          :to="`/page-${i}`"
+        >
           Page {{ i }}
         </NuxtLink>
+        <NuxtLink
+          :to="{
+            query: { text: 'pro-max', sort: 'rating' },
+            path: `page-${+($route.params.id || 0) + 1}`,
+          }"
+        >
+          Next + Search
+        </NuxtLink>
       </div>
-    </div>
+
+      <div class="deck">
+        <div>
+          <input
+            id="umami-disabled"
+            v-model="localStorageToggle"
+            name="umami-disabled"
+            type="checkbox"
+          >
+          <label for="umami-disabled">Disable Umami via localStorage</label>
+        </div>
+      </div>
+    </main>
   </div>
 </template>
 
-<style src="./reset.css"></style>
-
 <style>
+:root {
+  color-scheme: dark only;
+  color: hsl(100, 10%, 90%);
+  font-family: system-ui, sans-serif;
+  font-size: 15px;
+}
+
 .page-root {
-  background: linear-gradient(to bottom right, burlywood, aliceblue);
+  background: linear-gradient(to bottom, hsl(88, 15%, 10%), hsl(0, 0%, 5%));
   min-height: 100vh;
   padding: 40px;
   display: grid;
   place-items: center;
   text-align: center;
-  font-family: "Source Sans Pro", system-ui, -apple-system, Ubuntu, sans-serif;
 }
 
 h1 {
-  font-size: xx-large;
+  font-size: 2.5rem;
   font-weight: 700;
 }
 
@@ -104,23 +147,25 @@ h1 {
   align-items: center;
   outline: none;
   cursor: pointer;
-  border: 1px solid #aaa;
   border-radius: 6px;
   width: auto;
   height: auto;
   user-select: none;
-  background-color: whitesmoke;
-  transition: all 350ms cubic-bezier(0.445, 0.05, 0.55, 0.95);
+  background-color: hsl(88, 25%, 10%);
+  border: 1px solid hsl(88, 25%, 10%);
+  transition: all 150ms ease;
   font-family: monospace;
+  font-weight: 500;
+  font-size: 0.85rem;
 }
 
 :is(button, a):is(:hover, :focus-visible) {
-  background-color: rgb(209, 209, 209);
+  border-color: hsl(88, 50%, 30%);
   outline: none;
 }
 
-:deep(h2) {
-  font-size: x-large;
+:is(h2) {
+  font-size: 1.5rem;
 }
 
 .deck {
@@ -128,9 +173,18 @@ h1 {
   padding: 8px;
   gap: 1rem;
   margin-top: 1rem;
-  margin-bottom: 2rem;
   align-items: flex-start;
   flex-wrap: wrap;
   justify-content: center;
+}
+
+input {
+  margin: 0.4rem;
+}
+
+label,
+input {
+  user-select: none;
+  cursor: pointer;
 }
 </style>
