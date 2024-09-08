@@ -5,9 +5,9 @@ export default defineNuxtConfig({
   modules: ['nuxt-umami'],
 
   umami: {
-    enabled: false,
-    host: 'https://savory.vercel.app/',
-    id: '84cc2d28-8689-4df0-b575-2202e34a75aa',
+    enabled: true,
+    host: 'https://umami-neon.netlify.app/',
+    id: 'b78d83da-5580-4b4a-a32f-95f56ff8e51d',
     proxy: 'cloak',
     useDirective: true,
     logErrors: true,

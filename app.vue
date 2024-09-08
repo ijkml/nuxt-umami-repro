@@ -14,6 +14,8 @@ const display = computed(() => [
 ]);
 
 function getInfo() {
+  umTrackEvent('get-info');
+
   $fetch("/api/ip").then((res) => {
     result.value = res;
   });
@@ -36,7 +38,7 @@ function getInfo() {
       <div class="deck">
         <div v-for="d in display" :key="d.name">
           <div>
-            <em>{{ d.name }}</em>
+            <b>{{ d.name }}</b>
           </div>
           <pre>{{ d.result }}</pre>
         </div>
