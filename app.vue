@@ -1,13 +1,15 @@
 <script setup lang="ts">
 const result = ref({
-  lib: 'unknown',
-  nitro: 'unknown',
-  server: 'unknown',
+  lib: "unknown",
+  nitro: "unknown",
+  server: "unknown",
+  cloudfare: "unknown",
 });
 
 const display = computed(() => [
   { name: "LIB", result: result.value.lib },
   { name: "NITRO", result: result.value.nitro },
+  { name: "CLOUDFARE", result: result.value.cloudfare },
   { name: "SERVER", result: result.value.server },
 ]);
 
@@ -33,7 +35,9 @@ function getInfo() {
 
       <div class="deck">
         <div v-for="d in display" :key="d.name">
-          <div><em>{{ d.name }}</em></div>
+          <div>
+            <em>{{ d.name }}</em>
+          </div>
           <pre>{{ d.result }}</pre>
         </div>
       </div>
