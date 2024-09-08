@@ -5,9 +5,9 @@ import { ofetch } from "ofetch";
 type LookupResult = {
   ip: string;
   country: string;
+  city: string;
+  region: string;
   // hostname: string;
-  // city: string;
-  // region: string;
   // loc: string;
   // org: string;
   // postal: string;
@@ -15,14 +15,19 @@ type LookupResult = {
 };
 
 async function getInfo(ipv4?: string | null) {
-  const { ip = 'unknown', country = 'unknown' } = await ofetch<LookupResult>(
+  const {
+    ip = "unknown",
+    country = "unknown",
+    city = "unknown",
+    region = "unknown",
+  } = await ofetch<LookupResult>(
     `https://ipinfo.io/${ipv4 ? `${ipv4}/` : ""}json?token=7ca5f8e404ade5`,
     { method: "GET" }
   ).catch(() => {
     return { ip: "e.r.r.o.r", country: "Fetch Error" };
   });
 
-  return { og_ip: ipv4 || 'unknown', ip, country };
+  return { og_ip: ipv4 || "unknown", ip, country, region, city };
 }
 
 export default defineEventHandler(async (event) => {

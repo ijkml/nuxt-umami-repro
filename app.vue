@@ -1,8 +1,8 @@
 <script setup lang="ts">
 const result = ref({
-  lib: { ip: "unknown", og_ip: "unknown", country: "unknown" },
-  nitro: { ip: "unknown", og_ip: "unknown", country: "unknown" },
-  server: { ip: "unknown", og_ip: "unknown", country: "unknown" },
+  lib: 'unknown',
+  nitro: 'unknown',
+  server: 'unknown',
 });
 
 const display = computed(() => [
