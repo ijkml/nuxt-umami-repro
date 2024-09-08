@@ -33,12 +33,10 @@ async function getInfo(ipv4?: string | null) {
 export default defineEventHandler(async (event) => {
   const lib_ip = getClientIp(event.node.req);
   const nitro_ip = getRequestIP(event);
-  const cloudfare_ip = event.headers.get('cf-connecting-ip');
 
   return {
     lib: await getInfo(lib_ip),
     nitro: await getInfo(nitro_ip),
-    cloudfare: await getInfo(cloudfare_ip),
     server: await getInfo(),
   };
 });

@@ -3,13 +3,11 @@ const result = ref({
   lib: "unknown",
   nitro: "unknown",
   server: "unknown",
-  cloudfare: "unknown",
 });
 
 const display = computed(() => [
   { name: "LIB", result: result.value.lib },
   { name: "NITRO", result: result.value.nitro },
-  { name: "CLOUDFARE", result: result.value.cloudfare },
   { name: "SERVER", result: result.value.server },
 ]);
 
