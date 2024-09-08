@@ -5,7 +5,7 @@ export default defineNuxtConfig({
   modules: ['nuxt-umami'],
 
   umami: {
-    enabled: true,
+    enabled: false,
     host: 'https://umami-neon.netlify.app/',
     id: 'b78d83da-5580-4b4a-a32f-95f56ff8e51d',
     proxy: 'cloak',
