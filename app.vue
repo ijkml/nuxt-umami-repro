@@ -1,117 +1,40 @@
 <script setup lang="ts">
-const shareUrl = 'https://savory.vercel.app/share/j2f1spIBFqHJKsXv/Nuxt%20Umami';
+const result = ref({
+  lib: { ip: "unknown", og_ip: "unknown", country: "unknown" },
+  nitro: { ip: "unknown", og_ip: "unknown", country: "unknown" },
+  server: { ip: "unknown", og_ip: "unknown", country: "unknown" },
+});
 
-function testView() {
-  umTrackView().then(({ ok }) => {
-    console.log(ok ? 'That went well ;)' : `Oops, that didn't go as planned`);
-  });
-}
-
-function testEvent() {
-  umTrackEvent('event-test-2', { type: 'click', position: 'left' });
-}
-
-const tt = ref('TT');
-const tc = ref(0);
-
-const directiveBtns = computed(() => [
-  { text: 'Test Directive 1', action: 'test-directive' },
-  { text: `Test Directive ${tc.value}`, action: { name: 'Reactive Action', id: tt.value } },
+const display = computed(() => [
+  { name: "LIB", result: result.value.lib },
+  { name: "NITRO", result: result.value.nitro },
+  { name: "SERVER", result: result.value.server },
 ]);
 
-function updateRefs() {
-  tc.value++;
-  tt.value = `TT-${tc.value}`;
+function getInfo() {
+  $fetch("/api/ip").then((res) => {
+    result.value = res;
+  });
 }
-
-function seePreview() {
-  umTrackEvent('see-preview', { from: 'localhost' });
-}
-
-// is disabled via localStorage
-const localStorageToggle = ref(false);
-let storage: Storage | undefined;
-
-watch(localStorageToggle, (status) => {
-  storage?.setItem('umami.disabled', String(+status));
-});
-
-onMounted(() => {
-  storage = localStorage;
-  localStorageToggle.value = storage?.getItem('umami.disabled') === '1';
-});
 </script>
 
 <template>
   <div class="page-root">
-    <main
-      id="main"
-      class="page-container"
-    >
-      <h1>Nuxt Umami</h1>
+    <main id="main" class="page-container">
+      <h1>Your Info</h1>
 
       <NuxtLayout>
         <NuxtPage />
       </NuxtLayout>
 
       <div class="deck">
-        <button @click="testEvent">
-          Run trackEvent
-        </button>
-        <button @click="testView">
-          Run trackView
-        </button>
-        <a
-          :href="shareUrl"
-          target="_blank"
-          rel="noopener noreferrer"
-          @click="seePreview"
-        >See Preview</a>
+        <button @click="getInfo">GET INFO</button>
       </div>
 
       <div class="deck">
-        <button
-          v-for="btn in directiveBtns"
-          :key="btn.text"
-          v-umami="btn.action"
-        >
-          {{ btn.text }}
-        </button>
-        <button @click="updateRefs">
-          Update Refs
-        </button>
-      </div>
-
-      <div class="deck">
-        <NuxtLink to="/">
-          Homepage
-        </NuxtLink>
-        <NuxtLink
-          v-for="i in 3"
-          :key="i"
-          :to="`/page-${i}`"
-        >
-          Page {{ i }}
-        </NuxtLink>
-        <NuxtLink
-          :to="{
-            query: { text: 'pro-max', sort: 'rating' },
-            path: `page-${+($route.params.id || 0) + 1}`,
-          }"
-        >
-          Next + Search
-        </NuxtLink>
-      </div>
-
-      <div class="deck">
-        <div>
-          <input
-            id="umami-disabled"
-            v-model="localStorageToggle"
-            name="umami-disabled"
-            type="checkbox"
-          >
-          <label for="umami-disabled">Disable Umami via localStorage</label>
+        <div v-for="d in display" :key="d.name">
+          <div><em>{{ d.name }}</em></div>
+          <pre>{{ d.result }}</pre>
         </div>
       </div>
     </main>
