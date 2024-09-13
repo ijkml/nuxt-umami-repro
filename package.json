@@ -7,10 +7,8 @@
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare"
   },
-  "devDependencies": {
-    "nuxt": "latest"
-  },
   "dependencies": {
-    "nuxt-umami": "latest"
+    "nuxt": "latest",
+    "nuxt-umami": "^3.0.1"
   }
 }
